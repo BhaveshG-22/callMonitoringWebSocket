@@ -5,6 +5,7 @@ const { Server } = require("socket.io");
 require("dotenv").config();
 
 const WS_ALLOWED_ORIGINS = process.env.WS_ALLOWED_ORIGINS.split(",");
+const PORT = process.env.PORT;
 
 const server = http.createServer(app);
 const io = new Server(server, {
