@@ -19,7 +19,7 @@ io.on("connection", (socket) => {
   console.log("USER CONNECTED BUT NOT JOINED ANY ROOM YET ");
 
   socket.on("join", (data) => {
-    socket.join(data); //newly connected connection joining a room
+    socket.join(data);  
     socket.emit("wsConnected", "true");
     console.log("USER CONNECTED IN ROOM ", data);
   });
@@ -27,10 +27,7 @@ io.on("connection", (socket) => {
   socket.on("requestReceived", (data) => {
     console.log("Request Received--->", data);
 
-    // console.log(socket.room); // : TODO - only forward request if more than one personalready exists in room else
-    // fire another emit saying requet cannot complete as no receiver
-
-    socket.to(data.room).emit("requestResponse", data.request);
+     socket.to(data.room).emit("requestResponse", data.request);
   });
 
   socket.on("disconnect", () => {
