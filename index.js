@@ -5,13 +5,11 @@ const { Server } = require("socket.io");
 require("dotenv").config();
 
 const WS_ALLOWED_ORIGINS = process.env.WS_ALLOWED_ORIGINS.split(",");
-console.log(WS_ALLOWED_ORIGINS);
-const PORT = process.env.PORT;
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: WS_ALLOWED_ORIGINS,
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
