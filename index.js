@@ -38,6 +38,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT | 4101, () => {
+server.listen(PORT || 4101, () => {
   console.log(`Server Started`);
 });
