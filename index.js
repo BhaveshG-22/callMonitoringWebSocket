@@ -2,24 +2,22 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const { Server } = require("socket.io");
+const cors = require("cors");
+
 require("dotenv").config();
+app.use(cors());
 
 const WS_ALLOWED_ORIGINS = process.env.WS_ALLOWED_ORIGINS.split(",");
 const PORT = process.env.PORT;
 
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-  },
-});
+const io = new Server(server);
 
 io.on("connection", (socket) => {
   console.log("USER CONNECTED BUT NOT JOINED ANY ROOM YET ");
 
   socket.on("join", (data) => {
-    socket.join(data);  
+    socket.join(data);
     socket.emit("wsConnected", "true");
     console.log("USER CONNECTED IN ROOM ", data);
   });
@@ -27,7 +25,7 @@ io.on("connection", (socket) => {
   socket.on("requestReceived", (data) => {
     console.log("Request Received--->", data);
 
-     socket.to(data.room).emit("requestResponse", data.request);
+    socket.to(data.room).emit("requestResponse", data.request);
   });
 
   socket.on("disconnect", () => {
